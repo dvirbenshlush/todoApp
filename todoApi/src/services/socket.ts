@@ -7,10 +7,27 @@ const editingTasks: Set<string> = new Set();
 export let io: Server;
 
 export const setupSocket = (server: any) => {
-  io = new Server(server);
+  io = new Server(server, {
+    cors: {
+      origin: "http://localhost:4200", 
+      methods: ["GET", "POST"],
+      allowedHeaders: ["Authorization"],
+      credentials: true
+    }
+  });
 
-  io.on('connection', (socket) => {
+  io.on('connect', (socket) => {
     console.log('A user connected');
+
+    
+    socket.on("getAllTasks", async () => {
+      try {
+        const tasks = await taskService.getAllTasks();
+        socket.emit("taskList", tasks);
+      } catch (error) {
+        console.error(error);
+      }
+    });
 
     socket.on('taskEditRequest', (taskId: string) => {
       if (editingTasks.has(taskId)) {
@@ -18,6 +35,15 @@ export const setupSocket = (server: any) => {
       } else {
         editingTasks.add(taskId);
         socket.emit('taskUnlocked', taskId);
+      }
+    });
+
+    socket.on('createTask', async (task: any) => {
+      try {
+        await taskService.createTask(task);
+        io.emit('createTask', task);
+      } catch (error) {
+        console.error(error);
       }
     });
 
