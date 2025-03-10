@@ -18,6 +18,6 @@ export const tasksReducer = createReducer(
     return state;
     }),
     on(TaskActions.updateTask, (state, { taskId, updatedTask }) => {
-        return state.map(t => t.externalTaskId === taskId ? updatedTask : t);
+        return state.map(t => t.title === taskId ? updatedTask : t);
       }),
 );
