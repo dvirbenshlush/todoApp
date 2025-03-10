@@ -1,0 +1,29 @@
+.task-item {
+    width: 100%;
+    margin-bottom: 10px;
+  
+    .task-title {
+      flex-grow: 1;
+      padding-left: 10px;
+    }
+  
+    .task-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 5px;
+      padding: 5px 10px;
+    }
+  
+    .task-details {
+      padding: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+  
+    mat-expansion-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  

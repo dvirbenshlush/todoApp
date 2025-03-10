@@ -1,0 +1,23 @@
+<mat-expansion-panel class="task-item">
+    <mat-expansion-panel-header>
+      <mat-checkbox></mat-checkbox>
+      <span class="task-title">{{ task.title }}</span>
+      <div class="task-actions">
+        <button mat-icon-button color="accent" (click)="edit.emit()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="delete.emit()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </mat-expansion-panel-header>
+  
+    <div class="task-details">
+      <p><strong>תיאור:</strong> {{ task.description || 'אין תיאור' }}</p>
+      <p><strong>נוצר בתאריך:</strong> {{ task.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+      @if(task.updatedBy) { 
+          <p><strong>נערך על ידי:</strong> {{ task.updatedBy }}</p>
+      }
+    </div>
+  </mat-expansion-panel>
+  
