@@ -1,4 +1,5 @@
 export interface Task {
+    _id?: any;
     isEditing: boolean;
     title: string;
     description?: string;

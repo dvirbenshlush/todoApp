@@ -9,7 +9,9 @@ import { selectTasks } from '../../actions/todo.selectors';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SocketService } from '../../services/socket.service';
 import { TaskItemComponent } from '../task-item/task-item.component';
-import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
+import { CreateDialogCommandComponent } from '../command-dialogs/create-dialog-command/create-dialog-command.component';
+import { DeleteDialogCommandComponent } from '../command-dialogs/delete-dialog-command/delete-dialog-command.component';
+import { EditDialogCommandComponent } from '../command-dialogs/edit-dialog-command/edit-dialog-command.component';
 
 
 @Component({
@@ -40,21 +42,14 @@ export class TaskListComponent implements OnInit {
 
   loadTasks() {
     this.socketService.getTaskList().subscribe((tasks) => {
-        console.log('get tasks', tasks);
         this.tasks = tasks;
       });
     }
 
-  openTaskDialog(task?: Task | null) {
-    const dialogRef = this.dialog.open(TaskDialogComponent, {
+  openCreateTaskDialog(task?: Task | null) {
+    const dialogRef = this.dialog.open(CreateDialogCommandComponent, {
       width: '400px',
-      data: task || {
-        title: '',
-        isEditing: false,
-        completed: false,
-        priority: 'low',
-        createdAt: new Date(),
-      }
+      data: task 
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -64,9 +59,32 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  deleteTask(id: string) {
-    this.socketService.deleteTask(id)
+  openUpdateTaskDialog(task: Task) {
+    const dialogRef = this.dialog.open(EditDialogCommandComponent, {
+        width: '400px',
+        data: task 
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.loadTasks();
+        }
+      });
   }
+  
+  deleteTask(task: Task) {
+    console.log('task - ', task);
+    const dialogRef = this.dialog.open(DeleteDialogCommandComponent, {
+        width: '400px',
+        data: task._id
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.loadTasks();
+        }
+      });
+    }
 
   toggleTask(title: string, task: Task) {
     task.completed = !task.completed;

@@ -17,15 +17,13 @@ export class SocketService {
     });
   }
 
-  // מאזין לקבלת כל המשימות כשהמשתמש מתחבר
   getTaskList(): Observable<any[]> {
     return new Observable((observer) => {
-      this.socket.emit("getAllTasks"); // בקשת כל המשימות (נוסיף בשרת)
+      this.socket.emit("getAllTasks"); 
       this.socket.on("taskList", (tasks) => observer.next(tasks));
     });
   }
 
-  // שליחת בקשה לנעול משימה לעריכה
   requestTaskEdit(taskId: string): Observable<boolean> {
     return new Observable((observer) => {
       this.socket.emit("taskEditRequest", taskId);
@@ -38,7 +36,6 @@ export class SocketService {
     });
   }
 
-  // שליחת עדכון משימה
   updateTask(taskId: string, updatedTask: Task) {
     this.socket.emit("taskUpdate", taskId, updatedTask);
   }
@@ -47,19 +44,16 @@ export class SocketService {
     this.socket.emit("createTask", newTask);
   }
 
-  // מאזין לעדכוני משימה בזמן אמת
   onTaskUpdated(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on("taskUpdated", (updatedTask) => observer.next(updatedTask));
     });
   }
 
-  // שליחת מחיקת משימה
   deleteTask(taskId: string) {
     this.socket.emit("taskDelete", taskId);
   }
 
-  // מאזין למחיקת משימות
   onTaskDeleted(): Observable<string> {
     return new Observable((observer) => {
       this.socket.on("taskDeleted", (taskId) => observer.next(taskId));

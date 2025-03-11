@@ -1,14 +1,15 @@
 <div class="task-list-container">
     <h2>רשימת משימות</h2>
-    <button mat-raised-button color="primary" (click)="openTaskDialog()">+ הוסף משימה</button>
+    <button mat-raised-button color="primary" (click)="openCreateTaskDialog()">+ הוסף משימה</button>
   
     <div class="tasks">
-      <app-task-item 
-        *ngFor="let task of tasks" 
-        [task]="task"
-        (edit)="openTaskDialog(task)"
-        (delete)="deleteTask(task.id)">
-      </app-task-item>
+        @for(task of tasks; track task) {
+            <app-task-item 
+                [task]="task"
+                (edit)="openUpdateTaskDialog(task)"
+                (delete)="deleteTask(task)">
+            </app-task-item>
+        }
     </div>
   </div>
   
