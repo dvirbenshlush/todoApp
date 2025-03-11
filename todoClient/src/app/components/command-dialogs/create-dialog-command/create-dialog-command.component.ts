@@ -21,8 +21,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/materia
   styleUrls: ['./create-dialog-command.component.scss']
 })
 export class CreateDialogCommandComponent {
-  lockedBy = '08084b7e-4b7b-4b7b-8b7b-7b7b7b7b7b7b'; //mock for auth id
-
+  lockedBy = localStorage.getItem('currentUserEmail')?.split('@')[0] || '';
 
   // initiall task
   task: Task = {
@@ -40,7 +39,6 @@ export class CreateDialogCommandComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.task.lockedBy = this.lockedBy; //TODO: add auth id
-    console.log('this.task', this.task);
 
     if (data) {
         this.command = data.command;

@@ -74,7 +74,6 @@ export class TaskListComponent implements OnInit {
   }
   
   deleteTask(task: Task) {
-    console.log('task - ', task);
     const dialogRef = this.dialog.open(DeleteDialogCommandComponent, {
         width: '400px',
         data: task._id

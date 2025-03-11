@@ -20,7 +20,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./task-item.component.scss']
 })
 export class TaskItemComponent {
-  userId = '08084b7e-4b7b-4b7b-8b7b-7b7b7b7b7f7b'; //mock for auth id
+  userId = localStorage.getItem('currentUserEmail')?.split('@')[0] || '';
   @Input() task!: Task;
   @Output() edit = new EventEmitter<void>();
   @Output() delete = new EventEmitter<void>();
