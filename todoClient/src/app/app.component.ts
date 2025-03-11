@@ -15,7 +15,8 @@ import { TaskListComponent } from './components/task-list/task-list.component';
 export class AppComponent {
   title = 'TodosClient';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+  }
 
   isAuthenticated(): boolean {
     return this.authService.isAuthenticated();

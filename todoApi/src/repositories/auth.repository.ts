@@ -1,12 +1,13 @@
-// import User, { IUser } from "../models/user.model";
+import { User, IUser } from "../models/user.model";
 
-// export class AuthRepository {
+export class AuthRepository {
    
-//     async login(): Promise<IUser[]> {
-//         return await User.find();
-//     }
+    async login(userId: string): Promise<IUser | null> {
+        return await User.findOne({ username: userId });
+    }
 
-//     async register(id: string): Promise<IUser | null> {
-//         return await User.findById(id);
-//     }
-// }
+    async register(user: IUser): Promise<void> {
+        const newUser = new User(user);
+        await newUser.save();
+    }
+}

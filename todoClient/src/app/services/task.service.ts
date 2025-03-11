@@ -3,10 +3,11 @@ import { Injectable } from "@angular/core";
 import { Task } from "../models/task.model";
 import { HttpClient } from "@angular/common/http";
 import { ApiResponse } from "../models/api-response.model";
+import { environment } from "../../environments/environments";
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  private apiUrl = 'http://localhost:5000/api/';
+  private apiUrl = `${environment['server_url']}/api/`;
 
   constructor(private http: HttpClient) {}
 

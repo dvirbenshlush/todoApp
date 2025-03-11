@@ -1,7 +1,8 @@
-import { Injectable } from "@angular/core";
-import { io, Socket } from "socket.io-client";
 import { Observable } from "rxjs";
+import { environment } from '../../../src/environments/environments'
+import { Injectable } from "@angular/core";
 import { Task } from "../models/task.model";
+import { io, Socket } from "socket.io-client";
 
 @Injectable({
   providedIn: "root",
@@ -10,7 +11,7 @@ export class SocketService {
   private socket: Socket;
 
   constructor() {
-    this.socket = io("http://localhost:5000"); // ודא שזו הכתובת הנכונה של השרת
+    this.socket = io(environment['server_url']); 
 
     this.socket.on("connect", () => {
       console.log("Connected to WebSocket server");

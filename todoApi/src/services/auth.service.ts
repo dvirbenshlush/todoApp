@@ -1,19 +1,19 @@
-// import { ITask } from "../models/task.model";
-// import { AuthRepository } from "../repositories/auth.repository";
+import { IUser } from "../models/user.model";
+import { AuthRepository } from "../repositories/auth.repository";
 
-// export class AuthService {
+export class AuthService {
 
-//     private authRepository: AuthRepository;
+    private authRepository: AuthRepository;
 
-//     constructor() {
-//         this.authRepository = new AuthRepository();
-//     }
+    constructor() {
+        this.authRepository = new AuthRepository();
+    }
    
-//     async login(req: Request, res: Response) {
-//         return this.authRepository.getAllTasks();
-//     }
+    async login(userId: string) {
+        return this.authRepository.login(userId);
+    }
 
-//     async register(req: Request, res: Response) {
-//         return this.authRepository.;
-//     }
-// }
+    async register(user: IUser){
+        return this.authRepository.register(user);
+    }
+}

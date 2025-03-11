@@ -19,7 +19,7 @@ export const getAllTasks = async (req: Request, res: Response) => {
 
 export const getTaskById = async (req: Request, res: Response) => { 
     try {
-        const tasks = await taskService.getTaskById(req.params.id); // שים לב לשימוש ב-req.params
+        const tasks = await taskService.getTaskById(req.params.id);
         res.status(200).json(tasks);
     } catch (error) {
         if (error instanceof Error) {
