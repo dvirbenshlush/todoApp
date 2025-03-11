@@ -2,11 +2,18 @@
     <mat-expansion-panel-header>
       <mat-checkbox></mat-checkbox>
       <span class="task-title">{{ task.title }}</span>
+      @if(task.lockedBy && task.lockedBy !== userId) {
+          <span class="task-locked">
+            🔒 נעול על ידי {{ task.lockedBy }}
+          </span>
+      }
       <div class="task-actions">
-        <button mat-icon-button color="accent" (click)="edit.emit()">
+        <button mat-icon-button color="accent" (click)="edit.emit()"
+        [disabled]="task.lockedBy && task.lockedBy !== userId">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="delete.emit()">
+        <button mat-icon-button color="warn" (click)="delete.emit()"
+        [disabled]="task.lockedBy && task.lockedBy !== userId">
           <mat-icon>delete</mat-icon>
         </button>
       </div>

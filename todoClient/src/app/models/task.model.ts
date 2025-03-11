@@ -1,6 +1,7 @@
 export interface Task {
     _id?: any;
     isEditing: boolean;
+    lockedBy?: string;
     title: string;
     description?: string;
     completed: boolean;

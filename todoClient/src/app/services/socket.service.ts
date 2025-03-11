@@ -59,4 +59,24 @@ export class SocketService {
       this.socket.on("taskDeleted", (taskId) => observer.next(taskId));
     });
   }
+
+  lockTask(taskId: string, userId: string) {
+    this.socket.emit("lockTask", { taskId, userId });
+  }
+  
+  unlockTask(taskId: string) {
+    this.socket.emit("unlockTask", { taskId });
+  }
+  
+  onTaskLocked(): Observable<{ taskId: string; userId: string }> {
+    return new Observable((observer) => {
+      this.socket.on("taskLocked", (data) => observer.next(data));
+    });
+  }
+  
+  onTaskUnlocked(): Observable<{ taskId: string }> {
+    return new Observable((observer) => {
+      this.socket.on("taskUnlocked", (data) => observer.next(data));
+    });
+  }    
 }

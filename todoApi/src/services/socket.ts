@@ -16,6 +16,8 @@ export const setupSocket = (server: any) => {
     }
   });
 
+  let lockedTasks: { [key: string]: string } = {};
+
   io.on('connect', (socket) => {
     console.log('A user connected');
 
@@ -64,8 +66,22 @@ export const setupSocket = (server: any) => {
         io.emit('taskDeleted', taskId);
       } catch (error) {
         console.error(error);
-      } finally {
-        editingTasks.delete(taskId);
+      }
+    });
+
+    socket.on("lockTask", ({ taskId, userId }) => {
+      if (!lockedTasks[taskId]) {
+        lockedTasks[taskId] = userId;
+        io.emit("taskLocked", { taskId, userId });
+      } else {
+        socket.emit("taskLocked", { taskId, userId: lockedTasks[taskId] });
+      }
+    });
+  
+    socket.on("unlockTask", ({ taskId }) => {
+      if (lockedTasks[taskId]) {
+        delete lockedTasks[taskId];
+        io.emit("taskUnlocked", { taskId });
       }
     });
 

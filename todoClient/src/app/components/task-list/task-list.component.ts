@@ -42,6 +42,7 @@ export class TaskListComponent implements OnInit {
 
   loadTasks() {
     this.socketService.getTaskList().subscribe((tasks) => {
+        console.log(tasks)
         this.tasks = tasks;
       });
     }
